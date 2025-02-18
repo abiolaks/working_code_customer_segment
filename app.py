@@ -1,5 +1,6 @@
 import streamlit as st
-from customers_insight_def import CustomerSegmentationApp_1
+
+from segmentation_class import CustomerSegmentationApp_1
 
 # Custom CSS for styling
 st.markdown(
