@@ -2,7 +2,8 @@ import streamlit as st
 from openai import OpenAI
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
-import matplotlib.pyplot as plt
+
+# import matplotlib.pyplot as plt
 import pandas as pd
 import plotly.graph_objects as go
 
