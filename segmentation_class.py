@@ -2,6 +2,8 @@ import streamlit as st
 from openai import OpenAI
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
+import os
+from openai import AzureOpenAI
 
 # import matplotlib.pyplot as plt
 import pandas as pd
@@ -15,12 +17,18 @@ class CustomerSegmentationApp_1:
         self.client = self.get_openai_client()
 
     def get_openai_client(self):
-        """Initialize and return the OpenAI API client."""
-        api_key = st.secrets["secrets"]["OPENAI_API_KEY"]
-        if not api_key:
-            st.error("No OpenAI key found. Please set your API key.")
+        """Initialize and return the Azure OpenAI API client."""
+        api_key = st.secrets["secrets"].get("AZURE_OPENAI_API_KEY")
+        endpoint = st.secrets["secrets"].get("AZURE_OPENAI_ENDPOINT")
+
+        if not api_key or not endpoint:
+            st.error("Azure OpenAI credentials are missing in secrets.toml.")
             return None
-        return OpenAI(api_key=api_key)
+
+        client = AzureOpenAI(
+            api_key=api_key, api_version="2024-07-01-preview", azure_endpoint=endpoint
+        )
+        return client
 
     def load_data(self):
         """_summary_:Handle file upload and load customer data.
