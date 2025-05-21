@@ -17,18 +17,14 @@ class CustomerSegmentationApp_1:
         self.client = self.get_openai_client()
 
     def get_openai_client(self):
-        """Initialize and return the Azure OpenAI API client."""
-        api_key = st.secrets["secrets"].get("AZURE_OPENAI_API_KEY")
-        endpoint = st.secrets["secrets"].get("AZURE_OPENAI_ENDPOINT")
-
-        if not api_key or not endpoint:
-            st.error("Azure OpenAI credentials are missing in secrets.toml.")
+        """_summary_: Initialize and return the OpenAI API client.
+        _return_: OpenAI API client
+        """
+        api_key = st.secrets["secrets"]["OPENAI_API_KEY"]
+        if not api_key:
+            st.error("No OpenAI key found, Please set your API key. ")
             return None
-
-        client = AzureOpenAI(
-            api_key=api_key, api_version="2024-07-01-preview", azure_endpoint=endpoint
-        )
-        return client
+        return OpenAI(api_key=api_key)
 
     def load_data(self):
         """_summary_:Handle file upload and load customer data.
